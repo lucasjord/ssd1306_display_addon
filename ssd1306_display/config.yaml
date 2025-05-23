@@ -1,14 +1,16 @@
-name: SSD1306 Display Add-on
-version: "1.0"
-slug: ssd1306_display
-description: Display boot status on SSD1306 via I2C
+name: "SSD1306 Display"
+version: "1.0.0"
+slug: "ssd1306_display"
+description: "Compiles and runs the SSD1306 display C program on boot"
 startup: services
 boot: auto
+init: false
 host_network: true
 privileged:
   - SYS_RAWIO
-  - SYS_ADMIN
 devices:
-  - /dev/i2c-1
-options: {}
-schema: {}
+  - "/dev/i2c-1"
+arch:
+  - amd64
+  - armv7
+  - aarch64
