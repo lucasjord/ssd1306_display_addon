@@ -20,7 +20,6 @@ This Home Assistant add-on clones, compiles, and runs the UCTRONICS SSD1306 disp
 ## Notes
 
 - Requires access to I2C `/dev/i2c-1`
-- Uses `wiringPi` (ensure your device supports it)
 
 ## License
 
