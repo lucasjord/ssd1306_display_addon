@@ -1,16 +1,16 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM debian:bullseye-slim
 
-LABEL maintainer="your_email@example.com"
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git build-essential gcc make i2c-tools libi2c-dev
 
-# Install build tools and I2C headers
-RUN apk add --no-cache build-base linux-headers i2c-tools
+# Clone and build wiringPi
+RUN git clone https://github.com/WiringPi/WiringPi.git /wiringPi && \
+    cd /wiringPi && ./build
 
-# Copy source code and font definitions
-COPY display.c /display.c
-COPY oled_fonts.h /oled_fonts.h
+# Copy run script
 COPY run.sh /run.sh
-
 RUN chmod +x /run.sh
 
 CMD [ "/run.sh" ]
+
