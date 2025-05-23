@@ -3,20 +3,18 @@ FROM $BUILD_FROM
 
 ENV LANG C.UTF-8
 
-# Install necessary packages
 RUN apk add --no-cache git build-base i2c-tools linux-headers
 
-# Clone WiringPi and build manually (skip ./build script)
+# Build WiringPi manually
 RUN git clone https://github.com/WiringPi/WiringPi.git /wiringPi && \
     cd /wiringPi/wiringPi && make && make install && \
     cd /wiringPi/devLib && make && make install
 
-# Copy your display.c file into the container
-COPY display.c /app/display.c
+# Clone the full SSD1306 repo
+RUN git clone https://github.com/UCTRONICS/U6143_ssd1306.git /ssd1306
 
-# Build your display binary
-RUN gcc -o /app/display /app/display.c -lwiringPi
+# Build all .c files in /ssd1306/C and output executable /app/display
+RUN gcc /ssd1306/C/*.c -o /app/display -lwiringPi
 
-# Run it on container start
-CMD [ "/app/display" ]
+CMD ["/app/display"]
 
