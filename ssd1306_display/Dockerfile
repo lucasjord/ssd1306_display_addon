@@ -2,7 +2,7 @@ ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 # Add labels
-LABEL maintainer="you@example.com"
+LABEL maintainer="lucas.jordan.hyland@gmail.com"
 
 # Install dependencies
 RUN apk add --no-cache gcc musl-dev linux-headers git
