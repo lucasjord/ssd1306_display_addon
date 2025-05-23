@@ -1,16 +1,19 @@
 #!/bin/sh
 
-set -e
+echo "[INFO] Starting SSD1306 display add-on..."
 
-echo "[INFO] Cloning SSD1306 repo..."
-#git clone https://github.com/UCTRONICS/U6143_ssd1306.git /opt/ssd1306 # original 
-git clone https://github.com/lucasjord/U6143_ssd1306.git /opt/ssd1306  # new for this
-
+# Compile the display code
 echo "[INFO] Compiling display.c..."
-cd /opt/ssd1306/C || exit 1
-#gcc display.c -o display -lwiringPi
-gcc display.c -o display -li2c
+gcc /display.c -o /display -li2c
 
-echo "[INFO] Running the program..."
-./display
+if [ $? -ne 0 ]; then
+    echo "[ERROR] Compilation failed."
+    exit 1
+fi
+
+# Run the binary
+echo "[INFO] Running display binary..."
+/display
+
+echo "[INFO] Display process completed."
 
