@@ -1,4 +1,3 @@
-#include <oled_fonts.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -18,7 +17,7 @@ static int fd;
 
 // ASCII 5x8 font table
 static const uint8_t font[][5] = {
-#include "oledfont.h" // you'll need to copy this from UCTRONICS repo
+#include "oled_fonts.h" // you'll need to copy this from UCTRONICS repo
 };
 
 void oled_write_cmd(uint8_t cmd) {
