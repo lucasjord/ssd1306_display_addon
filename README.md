@@ -4,7 +4,7 @@ This Home Assistant add-on clones, compiles, and runs the UCTRONICS SSD1306 disp
 
 ## Features
 
-- Clones the [U6143_ssd1306 GitHub repo](https://github.com/UCTRONICS/U6143_ssd1306)
+- Clones the [U6143_ssd1306 GitHub repo](https://github.com/lucasjord/U6143_ssd1306/)
 - Compiles `display.c` using `gcc`
 - Runs the display demo program on boot
 
