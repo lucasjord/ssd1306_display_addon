@@ -14,7 +14,8 @@ RUN git clone https://github.com/WiringPi/WiringPi.git /wiringPi && \
 RUN git clone https://github.com/UCTRONICS/U6143_ssd1306.git /ssd1306
 
 # Build all .c files in /ssd1306/C and output executable /app/display
-RUN gcc /ssd1306/C/*.c -o /app/display -lwiringPi
+#RUN gcc /ssd1306/C/*.c -o /app/display -lwiringPi
+RUN gcc -g -rdynamic /ssd1306_display/*.c -o /app/display -lwiringPi
 
 CMD ["/app/display"]
 
