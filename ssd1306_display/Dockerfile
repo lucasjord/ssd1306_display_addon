@@ -1,15 +1,16 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Add labels
-LABEL maintainer="lucas.jordan.hyland@gmail.com"
+LABEL maintainer="your_email@example.com"
 
-# Install dependencies
-RUN apk add --no-cache gcc musl-dev linux-headers git
+# Install build tools and I2C headers
+RUN apk add --no-cache build-base linux-headers i2c-tools
 
-# Copy script
+# Copy source code and font definitions
+COPY display.c /display.c
+COPY oled_fonts.h /oled_fonts.h
 COPY run.sh /run.sh
+
 RUN chmod +x /run.sh
 
 CMD [ "/run.sh" ]
-
