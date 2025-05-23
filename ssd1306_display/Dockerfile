@@ -1,33 +1,22 @@
-FROM debian:bullseye-slim
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    git build-essential gcc make i2c-tools libi2c-dev
+ENV LANG C.UTF-8
 
-# Clone and build wiringPi
-#RUN git clone https://github.com/WiringPi/WiringPi.git /wiringPi && \
-#    cd /wiringPi && ./build
+# Install necessary packages
+RUN apk add --no-cache git build-base i2c-tools linux-headers
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    git build-essential gcc make i2c-tools libi2c-dev curl
+# Clone WiringPi and build manually (skip ./build script)
+RUN git clone https://github.com/WiringPi/WiringPi.git /wiringPi && \
+    cd /wiringPi/wiringPi && make && make install && \
+    cd /wiringPi/devLib && make && make install
 
-# Clone WiringPi repo
-RUN git clone https://github.com/WiringPi/WiringPi.git /wiringPi
+# Copy your display.c file into the container
+COPY display.c /app/display.c
 
-# List files to confirm presence of build script
-RUN ls -l /wiringPi && cat /wiringPi/build
+# Build your display binary
+RUN gcc -o /app/display /app/display.c -lwiringPi
 
-# Make build script executable just in case
-RUN chmod +x /wiringPi/build
-
-# Run build script
-RUN cd /wiringPi && ./build
-
-
-# Copy run script
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
-
-CMD [ "/run.sh" ]
+# Run it on container start
+CMD [ "/app/display" ]
 
